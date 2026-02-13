@@ -69,12 +69,12 @@ body{
   gap:12px;
 }
 
-.logo-img {
-  width: 75px;
+.brand img {
+  width: 115px;
   height: auto;
 }
 .brand-name{
-  font-weight: 900;
+  font-weight: 600;
   letter-spacing: -0.4px;
 }
 .brand-sub{
