@@ -262,6 +262,44 @@ h3{
   margin-top: 14px;
 }
 
+
+.testimonials{
+  margin-top: 16px;
+}
+
+.section-head{
+  margin-bottom: 12px;
+}
+
+.section-head h2{
+  margin: 0 0 6px;
+}
+
+.testimonials-grid{
+  display:grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+}
+
+.testimonial-card{
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+}
+
+.testimonial-card p{
+  margin:0;
+  color: var(--muted);
+  line-height: 1.5;
+}
+
+.stars{
+  color:#f59e0b;
+  letter-spacing: 2px;
+  font-size: 18px;
+  line-height:1;
+}
+
 .footer-card{
   margin: 16px 0 20px;
 }
@@ -281,6 +319,7 @@ h3{
   .grid{ grid-template-columns: 1fr; }
   .grid2{ grid-template-columns: 1fr; }
   .topbar-inner{ flex-wrap:wrap; }
+  .testimonials-grid{ grid-template-columns: 1fr; }
 }
 .top-actions {
   display: flex;
