@@ -332,7 +332,16 @@ h3{
 .top-actions {
   display: flex;
   align-items: center;
+  justify-content: space-between;
+  flex: 1;
+  gap: 16px;
+}
+
+.social-actions {
+  display: inline-flex;
+  align-items: center;
   gap: 10px;
+  margin: 0 auto;
 }
 
 .instagram {
@@ -344,7 +353,8 @@ h3{
   align-items: center;
   justify-content: center;
   box-shadow: var(--shadow2);
-  transition: 0.2s ease;
+  text-decoration: none;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, color 0.2s ease;
 }
 
 .instagram svg {
@@ -367,22 +377,24 @@ h3{
   border: 1px solid rgba(229, 231, 235, 0.95);
   background: rgba(255, 255, 255, 0.92);
   box-shadow: 0 8px 18px rgba(17, 24, 39, 0.08);
-  color: #1f2937;
+  color: #111;
   text-decoration: none;
   font-size: 13px;
   line-height: 1;
   white-space: nowrap;
   letter-spacing: 0.01em;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, color 0.2s ease;
 }
 
 .google-trust-badge:hover {
   transform: translateY(-1px);
   box-shadow: 0 10px 22px rgba(17, 24, 39, 0.12);
+  color: #000;
 }
 
 .google-star {
   font-size: 12px;
+  color: #f59e0b;
 }
 
 .google-rating {
@@ -395,7 +407,7 @@ h3{
 }
 
 .google-reviews {
-  color: #4b5563;
+  color: inherit;
   font-weight: 500;
 }
 
@@ -403,9 +415,13 @@ h3{
 @media (max-width: 640px){
   .top-actions {
     width: 100%;
-    justify-content: flex-end;
+    justify-content: space-between;
     flex-wrap: wrap;
-    gap: 8px;
+    gap: 10px;
+  }
+
+  .social-actions {
+    margin: 0;
   }
 
   .google-trust-badge {
