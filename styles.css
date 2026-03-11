@@ -235,6 +235,14 @@ h3{
 
 .w100{ width:100%; }
 
+/* Product card CTA refinements */
+#precios .btn.btn-primary.w100{
+  padding: 10px 18px;
+  border-radius: 14px;
+  font-size: 14px;
+  line-height: 1.2;
+}
+
 .cta{
   display:flex;
   flex-wrap:wrap;
