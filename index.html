@@ -79,7 +79,7 @@
           <a class="btn btn-ghost btn-lg" href="#precios">
             Ver precios
           </a>
-          <a class="btn btn-ghost btn-lg" href="#queso-cabra">
+          <a class="btn btn-ghost btn-lg" href="#queso-cabra" data-scroll-target="queso-cabra">
             Queso de cabra
           </a>
         </div>
@@ -172,8 +172,8 @@
   </a>
 </div>
 
-      <div class="products-section-title">
-        <h2 id="queso-cabra">QUESO DE CABRA</h2>
+      <div id="queso-cabra" class="products-section-title">
+        <h2>QUESO DE CABRA</h2>
       </div>
 
       <div class="card">
@@ -294,10 +294,29 @@
 
   <script>
     document.getElementById("year").textContent = new Date().getFullYear();
+
+    const quesoHeroButton = document.querySelector('[data-scroll-target="queso-cabra"]');
+    const quesoSection = document.getElementById("queso-cabra");
+
+    if (quesoHeroButton && quesoSection) {
+      quesoHeroButton.addEventListener("click", (event) => {
+        event.preventDefault();
+
+        const noticeHeight = document.querySelector(".notice")?.offsetHeight || 0;
+        const topbarHeight = document.querySelector(".topbar")?.offsetHeight || 0;
+        const visualOffset = noticeHeight + topbarHeight + 24;
+        const targetTop = quesoSection.getBoundingClientRect().top + window.scrollY - visualOffset;
+        const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+        window.scrollTo({
+          top: Math.max(targetTop, 0),
+          behavior: prefersReducedMotion ? "auto" : "smooth"
+        });
+      });
+    }
   </script>
 </body>
 </html>
-
 
 
 

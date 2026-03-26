@@ -286,7 +286,7 @@ h3{
 
 
 #queso-cabra{
-  scroll-margin-top: var(--anchor-offset);
+  scroll-margin-top: calc(var(--anchor-offset) + 24px);
 }
 
 .products-section-title h2::after{
