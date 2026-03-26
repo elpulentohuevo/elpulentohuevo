@@ -264,11 +264,35 @@ h3{
 }
 .products-section-title{
   grid-column: 1 / -1;
-  margin-top: 8px;
+  margin-top: 20px;
+  margin-bottom: 8px;
+  text-align: center;
+  padding: 16px 18px 12px;
+  background: rgba(255, 255, 255, 0.55);
+  border: 1px solid rgba(229, 231, 235, 0.9);
+  border-radius: 16px;
 }
 
 .products-section-title h2{
   margin: 0;
+  display: inline-block;
+  font-size: 24px;
+  letter-spacing: 0.08em;
+  font-weight: 800;
+  position: relative;
+  padding-bottom: 10px;
+}
+
+.products-section-title h2::after{
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  transform: translateX(-50%);
+  width: 56px;
+  height: 2px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, rgba(22,163,74,.35), rgba(22,163,74,.8), rgba(22,163,74,.35));
 }
 
 .grid2{
