@@ -226,46 +226,46 @@
             <div class="queso-clientes-slider-viewport">
               <div class="queso-clientes-slider-track" data-queso-slider-track>
                 <figure class="queso-clientes-slide">
-                  <img src="img/clientes/2026-02-27.webp" alt="Cliente recibiendo pedido de El Pulento Huevo" loading="lazy" />
+                  <img src="img/clientes/2026-02-27.webp" alt="2026-02-27.webp" loading="lazy" />
                 </figure>
                 <figure class="queso-clientes-slide">
-                  <img src="img/clientes/2026-03-05.webp" alt="Entrega realizada a cliente" loading="lazy" />
+                  <img src="img/clientes/2026-03-05.webp" alt="2026-03-05.webp" loading="lazy" />
                 </figure>
                 <figure class="queso-clientes-slide">
-                  <img src="img/clientes/2026-03-10.webp" alt="Cliente contento con su compra" loading="lazy" />
+                  <img src="img/clientes/2026-03-10.webp" alt="2026-03-10.webp" loading="lazy" />
                 </figure>
                 <figure class="queso-clientes-slide">
-                  <img src="img/clientes/2026-03-25.webp" alt="Despacho exitoso en Santiago" loading="lazy" />
+                  <img src="img/clientes/2026-03-25.webp" alt="2026-03-25.webp" loading="lazy" />
                 </figure>
                 <figure class="queso-clientes-slide">
-                  <img src="img/clientes/cliente1.jpg" alt="Cliente mostrando su pedido" loading="lazy" />
+                  <img src="img/clientes/cliente1.jpg" alt="cliente1.jpg" loading="lazy" />
                 </figure>
                 <figure class="queso-clientes-slide">
-                  <img src="img/clientes/cliente2.webp" alt="Cliente recibiendo pedido de El Pulento Huevo" loading="lazy" />
+                  <img src="img/clientes/cliente2.webp" alt="cliente2.webp" loading="lazy" />
                 </figure>
                 <figure class="queso-clientes-slide">
-                  <img src="img/clientes/cliente3.webp" alt="Entrega realizada a cliente" loading="lazy" />
+                  <img src="img/clientes/cliente3.webp" alt="cliente3.webp" loading="lazy" />
                 </figure>
                 <figure class="queso-clientes-slide">
-                  <img src="img/clientes/cliente4.webp" alt="Cliente contento con su compra" loading="lazy" />
+                  <img src="img/clientes/cliente4.webp" alt="cliente4.webp" loading="lazy" />
                 </figure>
                 <figure class="queso-clientes-slide">
-                  <img src="img/clientes/cliente5.png" alt="Cliente recibiendo pedido de El Pulento Huevo" loading="lazy" />
+                  <img src="img/clientes/cliente5.png" alt="cliente5.png" loading="lazy" />
                 </figure>
                 <figure class="queso-clientes-slide">
-                  <img src="img/clientes/cliente6.png" alt="Entrega realizada a cliente" loading="lazy" />
+                  <img src="img/clientes/cliente6.png" alt="cliente6.png" loading="lazy" />
                 </figure>
                 <figure class="queso-clientes-slide">
-                  <img src="img/clientes/cliente7.png" alt="Cliente contento con su compra" loading="lazy" />
+                  <img src="img/clientes/cliente7.png" alt="cliente7.png" loading="lazy" />
                 </figure>
                 <figure class="queso-clientes-slide">
-                  <img src="img/clientes/cliente8.png" alt="Despacho exitoso en Santiago" loading="lazy" />
+                  <img src="img/clientes/cliente8.png" alt="cliente8.png" loading="lazy" />
                 </figure>
                 <figure class="queso-clientes-slide">
-                  <img src="img/clientes/cliente9.png" alt="Cliente mostrando su pedido" loading="lazy" />
+                  <img src="img/clientes/cliente9.png" alt="cliente9.png" loading="lazy" />
                 </figure>
                 <figure class="queso-clientes-slide">
-                  <img src="img/clientes/cliente10.webp" alt="Cliente recibiendo pedido de El Pulento Huevo" loading="lazy" />
+                  <img src="img/clientes/cliente10.webp" alt="cliente10.webp" loading="lazy" />
                 </figure>
               </div>
             </div>
@@ -273,6 +273,7 @@
               <button type="button" class="queso-clientes-slider-arrow queso-clientes-slider-arrow-prev" data-queso-slider-prev aria-label="Imagen anterior">‹</button>
               <button type="button" class="queso-clientes-slider-arrow queso-clientes-slider-arrow-next" data-queso-slider-next aria-label="Imagen siguiente">›</button>
             </div>
+            <p class="muted" data-queso-current-file aria-live="polite"></p>
           </div>
         </section>
       </div>
@@ -388,11 +389,16 @@
     const quesoSlides = quesoSliderTrack ? Array.from(quesoSliderTrack.querySelectorAll(".queso-clientes-slide")) : [];
     const quesoPrevButton = document.querySelector("[data-queso-slider-prev]");
     const quesoNextButton = document.querySelector("[data-queso-slider-next]");
+    const quesoCurrentFile = document.querySelector("[data-queso-current-file]");
     let activeQuesoSlideIndex = 0;
     let quesoSliderAutoplayId = null;
 
     const showQuesoSlide = (index) => {
       quesoSliderTrack.style.transform = `translateX(-${index * 100}%)`;
+      const activeImage = quesoSlides[index]?.querySelector("img");
+      if (quesoCurrentFile && activeImage) {
+        quesoCurrentFile.textContent = `Archivo visible: ${activeImage.alt}`;
+      }
     };
 
     const goToNextQuesoSlide = () => {
@@ -435,7 +441,6 @@
   </script>
 </body>
 </html>
-
 
 
 
