@@ -320,25 +320,26 @@ h3{
   height: 100%;
 }
 
-.queso-clientes{
+.queso-clientes-slider{
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 10px;
+  padding: 14px;
 }
 
-.queso-clientes-head{
+.queso-clientes-slider-head{
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 10px;
 }
 
-.queso-carousel-nav{
+.queso-clientes-slider-nav{
   display: inline-flex;
   gap: 8px;
 }
 
-.queso-carousel-arrow{
+.queso-clientes-slider-arrow{
   width: 36px;
   height: 36px;
   border-radius: 999px;
@@ -352,20 +353,22 @@ h3{
   transition: transform .12s ease, box-shadow .12s ease;
 }
 
-.queso-carousel-arrow:hover{
+.queso-clientes-slider-arrow:hover{
   transform: translateY(-1px);
   box-shadow: 0 12px 22px rgba(17,24,39,.13);
 }
 
-.queso-carousel-track{
+.queso-clientes-slider-viewport{
   position: relative;
   width: 100%;
-  min-height: 250px;
+  min-height: 190px;
   border-radius: 16px;
   overflow: hidden;
+  border: 1px solid rgba(229,231,235,.9);
+  background: rgba(255,255,255,.82);
 }
 
-.queso-carousel-image{
+.queso-clientes-slide{
   position: absolute;
   inset: 0;
   width: 100%;
@@ -375,7 +378,7 @@ h3{
   transition: opacity .24s ease;
 }
 
-.queso-carousel-image.is-active{
+.queso-clientes-slide.is-active{
   opacity: 1;
 }
 
@@ -436,7 +439,7 @@ h3{
   .grid{ grid-template-columns: 1fr; }
   .grid2{ grid-template-columns: 1fr; }
   .queso-bottom-row{ grid-template-columns: 1fr; }
-  .queso-carousel-track{ min-height: 220px; }
+  .queso-clientes-slider-viewport{ min-height: 200px; }
   .topbar-inner{ flex-wrap:wrap; }
   .testimonials-grid{ grid-template-columns: 1fr; }
 }
