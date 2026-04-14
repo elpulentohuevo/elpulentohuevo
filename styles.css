@@ -395,12 +395,14 @@ h3{
   width: 100%;
   height: 100%;
   margin: 0;
+  background: #f8fafc;
 }
 
 .queso-clientes-slide img{
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: contain;
+  object-position: center;
   display: block;
 }
 
