@@ -214,21 +214,32 @@
              target="_blank" rel="noopener">Cotizar</a>
         </div>
 
-        <section class="card queso-clientes-slider" aria-label="Clientes felices">
-          <div class="queso-clientes-slider-head">
-            <h3>Clientes felices</h3>
-            <div class="queso-clientes-slider-nav" aria-label="Controles del carrusel de clientes">
-              <button type="button" class="queso-clientes-slider-arrow" data-queso-slider-prev aria-label="Imagen anterior">‹</button>
-              <button type="button" class="queso-clientes-slider-arrow" data-queso-slider-next aria-label="Imagen siguiente">›</button>
+        <section class="card queso-clientes-slider-card" aria-label="Clientes felices">
+          <h3 class="queso-clientes-slider-title">Clientes felices</h3>
+          <div class="queso-clientes-slider-box">
+            <div class="queso-clientes-slider-viewport">
+              <div class="queso-clientes-slider-track" data-queso-slider-track>
+                <figure class="queso-clientes-slide">
+                  <img src="img/clientes/2026-02-26.webp" alt="Cliente recibiendo pedido de El Pulento Huevo" loading="lazy" />
+                </figure>
+                <figure class="queso-clientes-slide">
+                  <img src="img/clientes/2026-02-27.webp" alt="Entrega realizada a cliente" loading="lazy" />
+                </figure>
+                <figure class="queso-clientes-slide">
+                  <img src="img/clientes/2026-03-05.webp" alt="Cliente contento con su compra" loading="lazy" />
+                </figure>
+                <figure class="queso-clientes-slide">
+                  <img src="img/clientes/2026-03-10.webp" alt="Despacho exitoso en Santiago" loading="lazy" />
+                </figure>
+                <figure class="queso-clientes-slide">
+                  <img src="img/clientes/2026-03-25.webp" alt="Cliente mostrando su pedido" loading="lazy" />
+                </figure>
+              </div>
             </div>
-          </div>
-
-          <div class="queso-clientes-slider-viewport" data-queso-slider-track>
-            <img src="img/clientes/2026-02-26.webp" alt="Cliente recibiendo pedido de El Pulento Huevo" class="queso-clientes-slide is-active" loading="lazy" />
-            <img src="img/clientes/2026-02-27.webp" alt="Entrega realizada a cliente" class="queso-clientes-slide" loading="lazy" />
-            <img src="img/clientes/2026-03-05.webp" alt="Cliente contento con su compra" class="queso-clientes-slide" loading="lazy" />
-            <img src="img/clientes/2026-03-10.webp" alt="Despacho exitoso en Santiago" class="queso-clientes-slide" loading="lazy" />
-            <img src="img/clientes/2026-03-25.webp" alt="Cliente mostrando su pedido" class="queso-clientes-slide" loading="lazy" />
+            <div class="queso-clientes-slider-nav" aria-label="Controles del carrusel de clientes">
+              <button type="button" class="queso-clientes-slider-arrow queso-clientes-slider-arrow-prev" data-queso-slider-prev aria-label="Imagen anterior">‹</button>
+              <button type="button" class="queso-clientes-slider-arrow queso-clientes-slider-arrow-next" data-queso-slider-next aria-label="Imagen siguiente">›</button>
+            </div>
           </div>
         </section>
       </div>
@@ -348,9 +359,7 @@
     let quesoSliderAutoplayId = null;
 
     const showQuesoSlide = (index) => {
-      quesoSlides.forEach((slide, slideIndex) => {
-        slide.classList.toggle("is-active", slideIndex === index);
-      });
+      quesoSliderTrack.style.transform = `translateX(-${index * 100}%)`;
     };
 
     const goToNextQuesoSlide = () => {
@@ -381,17 +390,18 @@
         startQuesoAutoplay();
       });
 
-      quesoSliderTrack.addEventListener("mouseenter", stopQuesoAutoplay);
-      quesoSliderTrack.addEventListener("mouseleave", startQuesoAutoplay);
-      quesoSliderTrack.addEventListener("focusin", stopQuesoAutoplay);
-      quesoSliderTrack.addEventListener("focusout", startQuesoAutoplay);
+      showQuesoSlide(activeQuesoSlideIndex);
+
+      quesoSliderTrack.parentElement.addEventListener("mouseenter", stopQuesoAutoplay);
+      quesoSliderTrack.parentElement.addEventListener("mouseleave", startQuesoAutoplay);
+      quesoSliderTrack.parentElement.addEventListener("focusin", stopQuesoAutoplay);
+      quesoSliderTrack.parentElement.addEventListener("focusout", startQuesoAutoplay);
 
       startQuesoAutoplay();
     }
   </script>
 </body>
 </html>
-
 
 
 
