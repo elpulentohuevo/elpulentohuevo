@@ -7,6 +7,7 @@
   --line:#e5e7eb;
   --accent:#22c55e;
   --accent2:#16a34a;
+  --brand-red:#dc2626;
 
   --shadow: 0 18px 45px rgba(0,0,0,.10);
   --shadow2: 0 10px 24px rgba(0,0,0,.08);
@@ -55,17 +56,19 @@ body{
 .topbar{
   position: sticky;
   top: 0;
-  background: rgba(255,255,255,.72);
-  backdrop-filter: blur(12px);
+  background: rgba(255,255,255,.78);
+  backdrop-filter: blur(14px);
   border-bottom: 1px solid rgba(229,231,235,.8);
   z-index: 10;
 }
 
 .topbar-inner{
-  display:flex;
+  display:grid;
+  grid-template-columns: 46px 1fr 46px;
   align-items:center;
-  justify-content:space-between;
-  gap:14px;
+  gap:12px;
+  padding-top: 8px;
+  padding-bottom: 8px;
 }
 
 .brand{
@@ -74,45 +77,142 @@ body{
   gap:12px;
 }
 
+.brand-centered{
+  justify-self:center;
+  text-decoration:none;
+}
+
 .brand img {
-  width: 115px;
+  width: 112px;
   height: auto;
+  display:block;
 }
-.brand-name{
-  font-weight: 600;
-  letter-spacing: -0.4px;
+
+.menu-toggle{
+  width: 42px;
+  height: 42px;
+  border-radius: 14px;
+  border: 1px solid rgba(229,231,235,.95);
+  background: rgba(255,255,255,.88);
+  box-shadow: 0 8px 18px rgba(17,24,39,.07);
+  display:inline-flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  gap:5px;
+  text-decoration:none;
 }
-.brand-sub{
-  font-size:13px;
-  color:var(--muted);
-  margin-top:2px;
+
+.menu-toggle span{
+  width: 18px;
+  height: 2px;
+  border-radius: 999px;
+  background: #111827;
 }
 
 /* HERO */
 .hero{
   display:grid;
-  grid-template-columns: 1.25fr .95fr;
+  grid-template-columns: 1fr;
   gap:18px;
-  padding-top: 18px;
+  padding-top: 16px;
 }
 
-.hero-left{
-  padding: 6px 0;
+.hero-compact{
+  max-width: 780px;
+  margin: 0 auto;
+  text-align:center;
+}
+
+.hero-content{
+  padding: 24px 18px 22px;
+  border: 1px solid rgba(255,255,255,.78);
+  border-radius: 28px;
+  background: linear-gradient(180deg, rgba(255,255,255,.82), rgba(255,255,255,.58));
+  box-shadow: 0 18px 42px rgba(17,24,39,.09);
 }
 
 h1{
-  margin: 12px 0 10px;
-  font-size: 44px;
-  line-height: 1.03;
-  letter-spacing: -1px;
+  margin: 0 0 10px;
+  font-size: clamp(34px, 8vw, 48px);
+  line-height: 1.02;
+  letter-spacing: -1.15px;
+}
+
+h1 span,
+.lead span{
+  color: var(--brand-red);
 }
 
 .lead{
-  margin: 0 0 14px;
+  margin: 0 auto 18px;
   color: var(--muted);
+  font-size: clamp(16px, 4vw, 19px);
+  line-height: 1.42;
+  max-width: 34ch;
+}
+
+.hero-benefits{
+  display:grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap:8px;
+  margin: 0 auto 18px;
+  max-width: 620px;
+}
+
+.hero-benefit{
+  min-width:0;
+  padding: 12px 8px 11px;
+  border-radius: 18px;
+  border: 1px solid rgba(229,231,235,.88);
+  background: rgba(255,255,255,.82);
+  box-shadow: 0 10px 22px rgba(17,24,39,.06);
+}
+
+.benefit-icon{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  width: 34px;
+  height: 34px;
+  margin: 0 auto 7px;
+  border-radius: 999px;
+  background: rgba(255,248,236,.95);
   font-size: 18px;
-  line-height: 1.55;
-  max-width: 52ch;
+}
+
+.whatsapp-icon{
+  color: #22c55e;
+  background: rgba(34,197,94,.12);
+}
+
+.whatsapp-icon svg{
+  width: 22px;
+  height: 22px;
+}
+
+.hero-benefit strong,
+.hero-benefit small{
+  display:block;
+  line-height:1.2;
+}
+
+.hero-benefit strong{
+  font-size: 13px;
+  letter-spacing: -.2px;
+}
+
+.hero-benefit small{
+  margin-top:4px;
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.hero-whatsapp{
+  width: min(100%, 390px);
+  min-height: 54px;
+  border-radius: 18px;
+  font-size: 16px;
 }
 
 .badges{
@@ -466,8 +566,6 @@ h3{
 
 /* Responsive */
 @media (max-width: 950px){
-  .hero{ grid-template-columns: 1fr; }
-  h1{ font-size: 34px; }
   .grid{ grid-template-columns: 1fr; }
   .grid2{ grid-template-columns: 1fr; }
   .queso-bottom-row{ grid-template-columns: 1fr; }
@@ -477,8 +575,84 @@ h3{
   .queso-clientes-slider-box{
     height: 240px;
   }
-  .topbar-inner{ flex-wrap:wrap; }
   .testimonials-grid{ grid-template-columns: 1fr; }
+}
+
+@media (max-width: 560px){
+  .container{
+    padding-left: 14px;
+    padding-right: 14px;
+  }
+
+  .notice{
+    font-size: 12px;
+  }
+
+  .notice-inner{
+    gap:6px 8px;
+    padding-top: 8px;
+    padding-bottom: 8px;
+  }
+
+  .topbar-inner{
+    grid-template-columns: 42px 1fr 42px;
+    padding-top: 7px;
+    padding-bottom: 7px;
+  }
+
+  .brand img{
+    width: 96px;
+  }
+
+  .instagram,
+  .menu-toggle{
+    width: 40px;
+    height: 40px;
+  }
+
+  .hero{
+    padding-top: 12px;
+  }
+
+  .hero-content{
+    padding: 20px 12px 18px;
+    border-radius: 24px;
+  }
+
+  .hero-benefits{
+    gap:7px;
+    margin-bottom: 16px;
+  }
+
+  .hero-benefit{
+    padding: 10px 5px;
+    border-radius: 16px;
+  }
+
+  .benefit-icon{
+    width: 30px;
+    height: 30px;
+    margin-bottom: 6px;
+    font-size: 16px;
+  }
+
+  .whatsapp-icon svg{
+    width: 20px;
+    height: 20px;
+  }
+
+  .hero-benefit strong{
+    font-size: 11.5px;
+  }
+
+  .hero-benefit small{
+    font-size: 10.5px;
+  }
+
+  .hero-whatsapp{
+    min-height: 52px;
+    font-size: 15px;
+  }
 }
 .top-actions {
   display: flex;
@@ -565,7 +739,7 @@ h3{
 
 @media (max-width: 640px){
   :root{
-    --anchor-offset: 170px;
+    --anchor-offset: 112px;
   }
 
   .top-actions {
@@ -582,5 +756,14 @@ h3{
   .google-trust-badge {
     font-size: 12px;
     padding: 6px 10px;
+  }
+}
+
+
+@media (max-width: 560px){
+  .header-instagram,
+  .menu-toggle{
+    width: 40px;
+    height: 40px;
   }
 }
