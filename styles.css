@@ -234,22 +234,37 @@ h1 span,
 
 /* Hero premium offer */
 .hero-offer-card{
-  width: 100%;
-  max-width: 760px;
-  margin: 24px auto 0;
-  padding: 24px;
-  border: 1px solid rgba(17,24,39,.10);
-  border-radius: 24px;
+  width: min(100%, 680px);
+  margin: 34px auto 0;
+  padding: clamp(26px, 5vw, 38px);
+  border: 1px solid rgba(17,24,39,.06);
+  border-radius: 28px;
   background: #fff;
-  box-shadow: 0 22px 48px rgba(17,24,39,.12), 0 8px 18px rgba(17,24,39,.06);
+  box-shadow: 0 24px 60px rgba(17,24,39,.10), 0 8px 22px rgba(17,24,39,.05);
   display: grid;
-  gap: 20px;
+  gap: 24px;
   text-align: center;
+}
+
+.hero-offer-badge{
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  justify-self: center;
+  padding: 7px 13px;
+  border-radius: 999px;
+  background: var(--brand-red);
+  color: #fff;
+  font-size: 10px;
+  line-height: 1;
+  font-weight: 950;
+  letter-spacing: .105em;
+  box-shadow: 0 10px 18px rgba(220,38,38,.14);
 }
 
 .hero-offer-body{
   display: grid;
-  gap: 16px;
+  gap: 22px;
   align-items: center;
 }
 
@@ -258,56 +273,72 @@ h1 span,
   min-width: 0;
 }
 
-.hero-offer-badge{
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  justify-self: center;
-  padding: 7px 12px;
-  border-radius: 999px;
-  background: var(--brand-red);
-  color: #fff;
-  font-size: 11px;
-  line-height: 1;
-  font-weight: 950;
-  letter-spacing: .08em;
-  box-shadow: 0 10px 18px rgba(220,38,38,.18);
-}
-
 .hero-offer-card h2{
   margin: 0;
   color: var(--text);
-  font-size: clamp(24px, 6vw, 34px);
-  line-height: 1.04;
+  font-size: clamp(30px, 7vw, 42px);
+  line-height: 1.03;
   font-weight: 950;
-  letter-spacing: -.75px;
+  letter-spacing: -.9px;
 }
 
-.hero-offer-card h2 span{
-  color: var(--brand-red);
+.hero-offer-quantity,
+.hero-offer-eggs{
+  display: block;
+}
+
+.hero-offer-eggs span{
+  color: #8a94a3;
+  font-size: .58em;
+  font-weight: 750;
+  letter-spacing: -.2px;
+  vertical-align: baseline;
 }
 
 .hero-offer-price{
   color: var(--brand-red);
-  font-size: clamp(42px, 11vw, 64px);
-  line-height: .95;
+  font-size: clamp(48px, 12vw, 70px);
+  line-height: .92;
   font-weight: 950;
-  letter-spacing: -1.8px;
+  letter-spacing: -2.4px;
+  white-space: nowrap;
 }
 
 .hero-offer-delivery{
-  margin: 8px 0 0;
-  color: #14532d;
-  font-size: 15px;
-  font-weight: 850;
+  margin: -2px 0 0;
+  color: #374151;
+  font-size: 16px;
+  line-height: 1.4;
+  font-weight: 760;
 }
 
 .hero-offer-button{
-  width: 100%;
-  min-height: 52px;
-  border-radius: 18px;
-  font-size: 16px;
-  box-shadow: 0 16px 30px rgba(34,197,94,.24);
+  justify-self: center;
+  width: min(100%, 300px);
+  min-height: 46px;
+  padding: 10px 18px;
+  border: 1.5px solid rgba(22,163,74,.82);
+  border-radius: 16px;
+  background: #fff;
+  color: var(--accent2);
+  font-size: 15px;
+  font-weight: 900;
+  gap: 8px;
+  box-shadow: none;
+}
+
+.hero-offer-button svg{
+  width: 19px;
+  height: 19px;
+  flex: 0 0 auto;
+  color: var(--accent2);
+}
+
+.hero-offer-button:hover{
+  transform: translateY(-2px);
+  background: rgba(34,197,94,.05);
+  border-color: var(--accent2);
+  box-shadow: 0 14px 28px rgba(34,197,94,.12);
 }
 
 @media (min-width: 720px){
@@ -321,21 +352,27 @@ h1 span,
 
   .hero-offer-body{
     grid-template-columns: minmax(0, 1fr) auto;
-    gap: 24px;
+    gap: 34px;
   }
 
   .hero-offer-price-box{
-    padding-left: 26px;
-    border-left: 1px solid rgba(17,24,39,.10);
+    padding-left: 34px;
+    border-left: 1px solid rgba(17,24,39,.08);
     text-align: right;
+  }
+
+  .hero-offer-delivery{
+    text-align: left;
   }
 }
 
 @media (max-width: 560px){
   .hero-offer-card{
-    padding: 20px;
-    border-radius: 22px;
-    gap: 16px;
+    width: min(100%, 390px);
+    margin-top: 30px;
+    padding: 26px 22px;
+    border-radius: 26px;
+    gap: 22px;
   }
 
   .hero-offer-body{
@@ -343,18 +380,22 @@ h1 span,
     text-align: center;
   }
 
-  .hero-offer-badge{
-    padding: 6px 10px;
-    font-size: 10px;
+  .hero-offer-card h2{
+    font-size: clamp(29px, 9vw, 36px);
+  }
+
+  .hero-offer-price{
+    font-size: clamp(50px, 15vw, 62px);
   }
 
   .hero-offer-delivery{
-    margin-top: 7px;
-    font-size: 13px;
+    margin-top: -4px;
+    font-size: 15px;
   }
 
   .hero-offer-button{
-    min-height: 50px;
+    min-height: 44px;
+    width: min(100%, 280px);
   }
 }
 
