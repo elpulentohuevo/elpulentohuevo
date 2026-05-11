@@ -234,15 +234,16 @@ h1 span,
 
 /* Hero premium offer */
 .hero-offer-card{
-  width: min(100%, 660px);
-  margin: 32px auto 0;
-  padding: clamp(24px, 4.4vw, 34px);
-  border: 1px solid rgba(17,24,39,.06);
-  border-radius: 28px;
-  background: #fff;
-  box-shadow: 0 24px 60px rgba(17,24,39,.10), 0 8px 22px rgba(17,24,39,.05);
+  width: min(100%, 540px);
+  margin: 28px auto 0;
+  padding: clamp(22px, 4vw, 30px);
+  border: 1px solid rgba(17,24,39,.07);
+  border-radius: 30px;
+  background: linear-gradient(180deg, rgba(255,255,255,.98), rgba(255,255,255,.92));
+  box-shadow: 0 22px 46px rgba(17,24,39,.10), 0 8px 18px rgba(17,24,39,.05);
   display: grid;
-  gap: 20px;
+  justify-items: center;
+  gap: 14px;
   text-align: center;
 }
 
@@ -250,8 +251,7 @@ h1 span,
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  justify-self: center;
-  padding: 7px 13px;
+  padding: 7px 14px;
   border-radius: 999px;
   background: var(--brand-red);
   color: #fff;
@@ -264,8 +264,9 @@ h1 span,
 
 .hero-offer-body{
   display: grid;
-  gap: 18px;
-  align-items: center;
+  justify-items: center;
+  gap: 10px;
+  width: 100%;
 }
 
 .hero-offer-info,
@@ -276,56 +277,58 @@ h1 span,
 .hero-offer-card h2{
   margin: 0;
   color: var(--text);
-  font-size: clamp(24px, 5.4vw, 32px);
-  line-height: 1.08;
+  font-size: clamp(25px, 5vw, 33px);
+  line-height: 1.04;
   font-weight: 950;
-  letter-spacing: -.55px;
+  letter-spacing: -.7px;
 }
 
-.hero-offer-quantity,
-.hero-offer-eggs{
+.hero-offer-title,
+.hero-offer-color{
   display: block;
 }
 
-.hero-offer-eggs span{
+.hero-offer-color{
+  margin-top: 5px;
   color: #8a94a3;
   font-size: .48em;
-  font-weight: 720;
-  letter-spacing: -.1px;
-  vertical-align: baseline;
+  line-height: 1.1;
+  font-weight: 760;
+  letter-spacing: -.05px;
 }
 
 .hero-offer-price{
   color: var(--brand-red);
-  font-size: clamp(37px, 7.8vw, 50px);
-  line-height: .96;
+  font-size: clamp(40px, 8vw, 54px);
+  line-height: .94;
   font-weight: 950;
-  letter-spacing: -1.35px;
+  letter-spacing: -1.45px;
   white-space: nowrap;
 }
 
 .hero-offer-delivery{
-  margin: 8px 0 0;
+  margin: 9px 0 0;
   color: #4b5563;
-  font-size: 12px;
+  font-size: 13px;
   line-height: 1.35;
-  font-weight: 720;
+  font-weight: 750;
   letter-spacing: -.05px;
 }
 
 .hero-offer-button{
   justify-self: center;
-  width: min(100%, 300px);
-  min-height: 46px;
-  padding: 11px 20px;
-  border: 1.5px solid rgba(22,163,74,.72);
-  border-radius: 16px;
-  background: #fff;
+  width: min(100%, 330px);
+  min-height: 50px;
+  margin-top: 2px;
+  padding: 12px 24px;
+  border: 1.5px solid rgba(22,163,74,.78);
+  border-radius: 18px;
+  background: rgba(255,255,255,.96);
   color: var(--accent2);
   font-size: 15px;
-  font-weight: 900;
+  font-weight: 920;
   gap: 9px;
-  box-shadow: 0 10px 22px rgba(22,163,74,.07);
+  box-shadow: 0 12px 24px rgba(22,163,74,.08);
 }
 
 .hero-offer-button svg{
@@ -337,78 +340,40 @@ h1 span,
 
 .hero-offer-button:hover{
   transform: translateY(-2px);
-  background: rgba(34,197,94,.05);
+  background: rgba(34,197,94,.055);
   border-color: var(--accent2);
-  box-shadow: 0 14px 28px rgba(34,197,94,.12);
-}
-
-@media (min-width: 720px){
-  .hero-offer-card{
-    text-align: left;
-  }
-
-  .hero-offer-badge{
-    justify-self: start;
-  }
-
-  .hero-offer-body{
-    grid-template-columns: minmax(0, 1.12fr) minmax(210px, .88fr);
-    gap: 30px;
-  }
-
-  .hero-offer-price-box{
-    position: relative;
-    padding-left: 30px;
-    text-align: center;
-  }
-
-  .hero-offer-price-box::before{
-    content: "";
-    position: absolute;
-    left: 0;
-    top: 50%;
-    width: 1px;
-    height: 58%;
-    border-radius: 999px;
-    background: rgba(17,24,39,.055);
-    transform: translateY(-50%);
-  }
-
-  .hero-offer-delivery{
-    text-align: center;
-  }
+  box-shadow: 0 16px 30px rgba(34,197,94,.13);
 }
 
 @media (max-width: 560px){
   .hero-offer-card{
     width: min(100%, 390px);
-    margin-top: 30px;
-    padding: 24px 22px 22px;
-    border-radius: 26px;
-    gap: 19px;
+    margin-top: 28px;
+    padding: 22px 20px;
+    border-radius: 28px;
+    gap: 13px;
   }
 
   .hero-offer-body{
-    justify-items: center;
-    text-align: center;
+    gap: 9px;
   }
 
   .hero-offer-card h2{
-    font-size: clamp(24px, 7.2vw, 29px);
+    font-size: clamp(24px, 7vw, 29px);
   }
 
   .hero-offer-price{
-    font-size: clamp(37px, 10.4vw, 46px);
+    font-size: clamp(40px, 10.6vw, 48px);
   }
 
   .hero-offer-delivery{
     margin-top: 8px;
-    font-size: 12px;
+    font-size: 12.5px;
   }
 
   .hero-offer-button{
-    min-height: 46px;
-    width: min(100%, 285px);
+    width: min(100%, 310px);
+    min-height: 49px;
   }
 }
 
