@@ -292,6 +292,8 @@
       </div>
     </section>
 
+    <!-- BACKUP OPINIONES ORIGINAL -->
+    <!--
     <section id="opiniones" class="testimonials" aria-labelledby="opiniones-clientes">
       <div class="section-head">
         <h2 id="opiniones-clientes">Opiniones de nuestros clientes</h2>
@@ -334,6 +336,55 @@
           <p>"Muy buena la atención y la calidad de los huevos, muy fresca."</p>
           <strong>— Cristian, La Cisterna</strong>
         </article>
+      </div>
+    </section>
+    -->
+    <section id="opiniones" class="testimonials" aria-labelledby="opiniones-clientes">
+      <div class="section-head">
+        <h2 id="opiniones-clientes">Opiniones de nuestros clientes</h2>
+        <p class="muted">Reseñas reales de clientes que valoran frescura, puntualidad y atención rápida por WhatsApp.</p>
+      </div>
+
+      <div class="testimonials-carousel" data-testimonials-carousel>
+        <div class="testimonials-grid" data-testimonials-grid>
+          <article class="card testimonial-card" data-testimonial-item>
+            <div class="stars" aria-label="Calificación de 5 estrellas">★★★★★</div>
+            <p>"Los huevos llegan siempre fresquitos y el despacho fue súper rápido. 100% recomendado."</p>
+            <strong>— Camila, Ñuñoa</strong>
+          </article>
+
+          <article class="card testimonial-card" data-testimonial-item>
+            <div class="stars" aria-label="Calificación de 5 estrellas">★★★★★</div>
+            <p>"Excelente calidad de los huevos y muy buena atención, recomendadisimo y confiable."</p>
+            <strong>— Agustín, Macul</strong>
+          </article>
+
+          <article class="card testimonial-card" data-testimonial-item>
+            <div class="stars" aria-label="Calificación de 5 estrellas">★★★★★</div>
+            <p>"Hoy recibí la caja de huevos en la puerta de casa."</p>
+            <strong>— Karen, Lo prado</strong>
+          </article>
+
+          <article class="card testimonial-card" data-testimonial-item>
+            <div class="stars" aria-label="Calificación de 5 estrellas">★★★★★</div>
+            <p>"Ya es la segunda vez que les compro huevos y son los mejores: fresquitos y hasta la puerta de mi casa. ¡Son fantásticos!"</p>
+            <strong>— Catalina, Puente Alto</strong>
+          </article>
+
+          <article class="card testimonial-card" data-testimonial-item>
+            <div class="stars" aria-label="Calificación de 5 estrellas">★★★★★</div>
+            <p>"Estoy feliz de haberlos encontrado, los huevos son exquisitos y llegan siempre puntuales y en perfecto estado."</p>
+            <strong>— Patricia Krumenaker, Las Condes</strong>
+          </article>
+
+          <article class="card testimonial-card" data-testimonial-item>
+            <div class="stars" aria-label="Calificación de 5 estrellas">★★★★★</div>
+            <p>"Muy buena la atención y la calidad de los huevos, muy fresca."</p>
+            <strong>— Cristian, La Cisterna</strong>
+          </article>
+        </div>
+
+        <nav class="testimonials-pagination" aria-label="Paginación de opiniones" data-testimonials-pagination></nav>
       </div>
     </section>
 
@@ -428,6 +479,123 @@
 
       startQuesoAutoplay();
     }
+
+
+    // <!-- BACKUP OPINIONES ORIGINAL -->
+    /*
+    Opiniones original: sección estática sin paginación ni carrusel.
+    */
+
+    const testimonialsCarousel = document.querySelector("[data-testimonials-carousel]");
+    const testimonialsGrid = testimonialsCarousel?.querySelector("[data-testimonials-grid]");
+    const testimonialCards = testimonialsGrid ? Array.from(testimonialsGrid.querySelectorAll("[data-testimonial-item]")) : [];
+    const testimonialsPagination = testimonialsCarousel?.querySelector("[data-testimonials-pagination]");
+    const testimonialsMediaDesktop = window.matchMedia("(min-width: 951px)");
+    const testimonialsMediaTablet = window.matchMedia("(min-width: 561px) and (max-width: 950px)");
+
+    let testimonialsActivePage = 0;
+    let testimonialsTotalPages = 1;
+    let testimonialsAutoplayTimer = null;
+
+    const getTestimonialsPerPage = () => {
+      if (testimonialsMediaDesktop.matches) return 6;
+      if (testimonialsMediaTablet.matches) return 2;
+      return 1;
+    };
+
+    const renderTestimonialsPage = (page, resetTransition = false) => {
+      if (!testimonialCards.length) return;
+
+      const perPage = getTestimonialsPerPage();
+      testimonialsTotalPages = Math.max(1, Math.ceil(testimonialCards.length / perPage));
+      testimonialsActivePage = Math.min(Math.max(page, 0), testimonialsTotalPages - 1);
+
+      testimonialCards.forEach((card, index) => {
+        const isVisible = index >= testimonialsActivePage * perPage && index < (testimonialsActivePage + 1) * perPage;
+        card.classList.toggle("is-visible", isVisible);
+        card.hidden = !isVisible;
+      });
+
+      testimonialsGrid.classList.toggle("without-transition", resetTransition);
+
+      const controls = testimonialsPagination.querySelectorAll("button[data-page]");
+      controls.forEach((btn) => {
+        const pageIndex = Number(btn.dataset.page);
+        const isCurrent = pageIndex === testimonialsActivePage;
+        btn.classList.toggle("is-active", isCurrent);
+        btn.setAttribute("aria-current", isCurrent ? "page" : "false");
+      });
+    };
+
+    const rebuildTestimonialsPagination = () => {
+      if (!testimonialsPagination) return;
+      const perPage = getTestimonialsPerPage();
+      testimonialsTotalPages = Math.max(1, Math.ceil(testimonialCards.length / perPage));
+
+      const pagesMarkup = Array.from({ length: testimonialsTotalPages }, (_, index) => `
+        <button type="button" data-page="${index}" aria-label="Ir a la página ${index + 1}">${index + 1}</button>
+      `).join("");
+
+      testimonialsPagination.innerHTML = `
+        <button type="button" class="page-arrow" data-page="prev" aria-label="Página anterior">‹</button>
+        ${pagesMarkup}
+        <button type="button" class="page-arrow" data-page="next" aria-label="Página siguiente">›</button>
+      `;
+    };
+
+    const goToTestimonialsPage = (page) => {
+      if (!testimonialCards.length) return;
+      const target = (page + testimonialsTotalPages) % testimonialsTotalPages;
+      renderTestimonialsPage(target);
+      restartTestimonialsAutoplay();
+    };
+
+    const startTestimonialsAutoplay = () => {
+      if (testimonialsTotalPages < 2) return;
+      clearInterval(testimonialsAutoplayTimer);
+      testimonialsAutoplayTimer = setInterval(() => {
+        goToTestimonialsPage(testimonialsActivePage + 1);
+      }, 6000);
+    };
+
+    const restartTestimonialsAutoplay = () => {
+      clearInterval(testimonialsAutoplayTimer);
+      startTestimonialsAutoplay();
+    };
+
+    if (testimonialsCarousel && testimonialsGrid && testimonialCards.length && testimonialsPagination) {
+      rebuildTestimonialsPagination();
+      renderTestimonialsPage(0, true);
+      startTestimonialsAutoplay();
+
+      testimonialsPagination.addEventListener("click", (event) => {
+        const button = event.target.closest("button[data-page]");
+        if (!button) return;
+
+        const action = button.dataset.page;
+        if (action === "prev") {
+          goToTestimonialsPage(testimonialsActivePage - 1);
+          return;
+        }
+
+        if (action === "next") {
+          goToTestimonialsPage(testimonialsActivePage + 1);
+          return;
+        }
+
+        goToTestimonialsPage(Number(action));
+      });
+
+      const handleResize = () => {
+        rebuildTestimonialsPagination();
+        renderTestimonialsPage(testimonialsActivePage, true);
+        restartTestimonialsAutoplay();
+      };
+
+      testimonialsMediaDesktop.addEventListener("change", handleResize);
+      testimonialsMediaTablet.addEventListener("change", handleResize);
+    }
+
   </script>
 </body>
 </html>
