@@ -35,7 +35,7 @@ jobs:
           GA = "G-S3J4Z0D8Z0"
           EXPECTED = set("portada oferta_90_extra bandeja_30_primera bandeja_30_extra delivery caja_120_primera caja_120_extra caja_180_primera caja_180_extra queso_250g queso_500g queso_1kg cotizacion_negocios pie_pagina".split())
           
-          NEW_PAGES = {"huevos-a-domicilio/":["domicilio_pedido","bandeja_30_primera","bandeja_30_extra","caja_120_primera","caja_120_extra","caja_180_primera","caja_180_extra"],"huevos-por-mayor/":["mayorista_cotizar"],"zonas-de-despacho/":["despacho_consultar"],"preguntas-frecuentes/":["faq_pedido"]}
+          NEW_PAGES = {"huevos-a-domicilio/":["domicilio_pedido","bandeja_30_primera","bandeja_30_extra","caja_120_primera","caja_120_extra","caja_180_primera","caja_180_extra"],"huevos-por-mayor/":["mayorista_cotizar"],"zonas-de-despacho/":["despacho_consultar"],"preguntas-frecuentes/":["faq_pedido"],"blog/":["blog_inicio"],"blog/cuanta-proteina-tiene-un-huevo/":["blog_proteina"],"blog/diferencias-huevos-primera-extra-super-extra/":["blog_calibres"],"blog/como-conservar-los-huevos/":["blog_conservacion"]}
           
           class Page(HTMLParser):
               def __init__(self):
@@ -111,7 +111,7 @@ jobs:
                           verify(bool(urllib.parse.parse_qs(url.query).get("text", [""])[0].strip()), "Mensaje de pedido ausente: " + str(button))
                   verify(len(ids) == len(EXPECTED) and set(ids) == EXPECTED, "Faltan, sobran o se repiten identificadores de WhatsApp")
                   verify(all(s in html for s in (GA, "googletagmanager.com/gtag/js", "whatsapp_click", "button_id", "analytics-consent")), "Codigo de Analytics o consentimiento incompleto")
-                  for asset in ("styles.css",):
+                  for asset in ("styles.css", "navigation-v1.css", "commercial-v1.css", "blog-v1.css"):
                       fetch(asset)
               except Exception as exc:
                   problems.append("Error al revisar la web o sus recursos: " + str(exc))
@@ -159,7 +159,7 @@ jobs:
           for attempt in range(2):
               errors = check()
               if not errors:
-                  print("OK: 5 paginas, HTTPS, botones WhatsApp, SEO, Analytics, CSS, sitemap y robots.txt.")
+                  print("OK: 9 paginas, HTTPS, botones WhatsApp, SEO, Analytics, CSS, sitemap y robots.txt.")
                   break
               print("Intento", attempt + 1, ":", json.dumps(errors, ensure_ascii=False), flush=True)
               if attempt == 0:
