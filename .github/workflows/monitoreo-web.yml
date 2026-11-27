@@ -14,6 +14,9 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 8
     steps:
+      - name: Esperar publicacion en cambios del monitor
+        if: github.event_name == 'push'
+        run: sleep 90
       - name: Revisar sitio publicado
         shell: bash
         run: |
@@ -31,6 +34,8 @@ jobs:
           PHONE = "56958868848"
           GA = "G-S3J4Z0D8Z0"
           EXPECTED = set("portada oferta_90_extra bandeja_30_primera bandeja_30_extra delivery caja_120_primera caja_120_extra caja_180_primera caja_180_extra queso_250g queso_500g queso_1kg cotizacion_negocios pie_pagina".split())
+          
+          NEW_PAGES = {"huevos-a-domicilio/":["domicilio_pedido","bandeja_30_primera","bandeja_30_extra","caja_120_primera","caja_120_extra","caja_180_primera","caja_180_extra"],"huevos-por-mayor/":["mayorista_cotizar"],"zonas-de-despacho/":["despacho_consultar"],"preguntas-frecuentes/":["faq_pedido"]}
           
           class Page(HTMLParser):
               def __init__(self):
@@ -111,11 +116,36 @@ jobs:
               except Exception as exc:
                   problems.append("Error al revisar la web o sus recursos: " + str(exc))
           
+              for path, expected in NEW_PAGES.items():
+                  try:
+                      html, headers = fetch(path)
+                      page = Page()
+                      page.feed(html)
+                      verify(len(page.titles) == 1 and bool(page.titles[0].strip()), path + ": titulo SEO incorrecto")
+                      verify(len(page.descriptions) == 1 and bool(page.descriptions[0].strip()), path + ": metadescripcion incorrecta")
+                      verify(page.h1 == 1 and page.canonicals == [BASE + path], path + ": H1 o canonica incorrectos")
+                      verify(not page.noindex and not re.search(r"\b(noindex|none)\b", headers.get("X-Robots-Tag", ""), re.I), path + ": no indexable")
+                      ids = []
+                      for a in page.links:
+                          href = a.get("href") or ""
+                          button = a.get("data-whatsapp-button")
+                          url = urllib.parse.urlsplit(href)
+                          wa = (url.hostname or "").lower() in ("wa.me", "api.whatsapp.com", "web.whatsapp.com", "whatsapp.com") or url.scheme == "whatsapp"
+                          if not (button or wa):
+                              continue
+                          ids.append(button)
+                          verify(url.scheme == "https" and url.netloc == "wa.me" and url.path == "/" + PHONE and not url.fragment, path + ": WhatsApp incorrecto " + str(button))
+                          verify(bool(urllib.parse.parse_qs(url.query).get("text", [""])[0].strip()), path + ": mensaje de pedido ausente " + str(button))
+                      verify(len(ids) == len(expected) and set(ids) == set(expected), path + ": identificadores WhatsApp incorrectos")
+                      verify(all(s in html for s in (GA, "googletagmanager.com/gtag/js", "whatsapp_click", "button_id", "analytics-consent")), path + ": Analytics incompleto")
+                  except Exception as exc:
+                      problems.append(path + ": " + str(exc))
+          
               try:
                   sitemap, _ = fetch("sitemap.xml")
                   root = ET.fromstring(sitemap)
                   ns = {"s": "http://www.sitemaps.org/schemas/sitemap/0.9"}
-                  verify(root.tag == "{http://www.sitemaps.org/schemas/sitemap/0.9}urlset" and BASE in [e.text for e in root.findall("s:url/s:loc", ns)], "Sitemap invalido o portada ausente")
+                  verify(root.tag == "{http://www.sitemaps.org/schemas/sitemap/0.9}urlset" and {BASE, *(BASE + path for path in NEW_PAGES)} <= {e.text for e in root.findall("s:url/s:loc", ns)}, "Sitemap invalido o faltan paginas")
               except Exception as exc:
                   problems.append("Sitemap inaccesible o invalido: " + str(exc))
               try:
@@ -129,7 +159,7 @@ jobs:
           for attempt in range(2):
               errors = check()
               if not errors:
-                  print("OK: web, HTTPS, 14 botones WhatsApp, SEO, Analytics, CSS, sitemap y robots.txt.")
+                  print("OK: 5 paginas, HTTPS, botones WhatsApp, SEO, Analytics, CSS, sitemap y robots.txt.")
                   break
               print("Intento", attempt + 1, ":", json.dumps(errors, ensure_ascii=False), flush=True)
               if attempt == 0:

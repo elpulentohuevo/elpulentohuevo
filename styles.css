@@ -981,3 +981,23 @@ h3{
     height: 40px;
   }
 }
+
+/* Navegacion y paginas comerciales */
+.seo-nav{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;margin:14px 0;}
+.seo-nav a{display:inline-flex;align-items:center;padding:9px 13px;border:1px solid #d1d5db;border-radius:12px;background:#fff;color:#1f2937;text-decoration:none;font-size:14px;font-weight:600;}
+.seo-nav a[aria-current="page"]{background:#e7f7eb;border-color:#82bc93;color:#14532d;}
+.seo-nav a:hover{text-decoration:underline;}
+.seo-nav a:focus-visible,.seo-page a:focus-visible,.seo-faq summary:focus-visible{outline:2px solid #166534;outline-offset:3px;}
+.seo-page{max-width:1020px;}
+.seo-page .seo-breadcrumb{font-size:14px;color:#4b5563;margin:12px 0;}
+.seo-page .seo-block{margin-top:18px;line-height:1.6;}
+.seo-page .seo-block h2{font-size:clamp(21px,4vw,26px);}
+.seo-page .seo-block a:not(.btn):not(.seo-nav a),.seo-page .hero a:not(.btn),.seo-breadcrumb a{color:#14532d;text-decoration:underline;}
+.seo-page .seo-cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,245px),1fr));gap:12px;}
+.seo-page .seo-product{border:1px solid #e5e7eb;background:#fff;border-radius:14px;padding:15px;}
+.seo-page .seo-actions{display:flex;flex-wrap:wrap;gap:8px;}
+.seo-page .seo-actions .btn{flex:1 1 115px;font-size:14px;}
+.seo-page .seo-faq{border-top:1px solid #e5e7eb;padding:12px 0;}
+.seo-page .seo-faq summary{cursor:pointer;font-weight:700;}
+.seo-page .seo-faq p{margin:10px 0 0;}
+@media(max-width:560px){.seo-nav{gap:6px;}.seo-nav a{padding:8px 10px;font-size:13px;}}

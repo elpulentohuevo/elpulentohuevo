@@ -2,8 +2,22 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://www.elpulentohuevo.cl/</loc>
-    <lastmod>2026-11-26</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>1.0</priority>
+    <lastmod>2026-11-27</lastmod>
+  </url>
+  <url>
+    <loc>https://www.elpulentohuevo.cl/huevos-a-domicilio/</loc>
+    <lastmod>2026-11-27</lastmod>
+  </url>
+  <url>
+    <loc>https://www.elpulentohuevo.cl/huevos-por-mayor/</loc>
+    <lastmod>2026-11-27</lastmod>
+  </url>
+  <url>
+    <loc>https://www.elpulentohuevo.cl/zonas-de-despacho/</loc>
+    <lastmod>2026-11-27</lastmod>
+  </url>
+  <url>
+    <loc>https://www.elpulentohuevo.cl/preguntas-frecuentes/</loc>
+    <lastmod>2026-11-27</lastmod>
   </url>
 </urlset>
