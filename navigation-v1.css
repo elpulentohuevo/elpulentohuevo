@@ -1,0 +1,30 @@
+/* Navegación principal: escritorio y menú móvil */
+.topbar {background:rgba(255,255,255,.97);}
+.topbar .topbar-inner{grid-template-columns:46px minmax(0,1fr) 46px;padding-top:5px;padding-bottom:5px;}
+.topbar .brand-centered{grid-column:2;grid-row:1;}
+.topbar .header-instagram{grid-column:3;grid-row:1;justify-self:end;}
+.topbar .brand img{width:82px;}
+.topbar .menu-toggle{display:none;grid-column:1;grid-row:1;cursor:pointer;padding:0;appearance:none;}
+.topbar .primary-nav{max-width:1020px;margin:0 auto;padding:0 18px 10px;display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:7px;}
+.topbar .primary-nav a{display:inline-flex;align-items:center;justify-content:center;min-height:42px;padding:9px 13px;background:transparent;border:1px solid transparent;border-radius:11px;color:#111827;font-size:14px;font-weight:650;text-decoration:none;line-height:1.25;text-align:center;}
+.topbar .primary-nav a:hover{background:#fff3f2;color:#b91c1c;}
+.topbar .primary-nav a[aria-current="page"]{background:#dc2626;border-color:#dc2626;color:white;}
+.topbar .primary-nav a.nav-prices{border-color:#e1b2ae;color:#b91c1c;background:white;}
+.topbar .primary-nav a.nav-prices:hover{background:#fff3f2;}
+.topbar .menu-toggle:focus-visible,.topbar .primary-nav a:focus-visible{outline:2px solid #b91c1c;outline-offset:3px;}
+:root{--anchor-offset:155px;}
+#precios{scroll-margin-top:calc(var(--anchor-offset) + 16px);}
+@media(max-width:767px){
+  :root{--anchor-offset:90px;}
+  .topbar .topbar-inner{grid-template-columns:44px minmax(0,1fr) 44px;}
+  .topbar .brand img{width:72px;}
+  .topbar .menu-toggle,.topbar .header-instagram{width:44px;height:44px;}
+  .topbar.nav-ready .menu-toggle{display:inline-flex;}
+  .topbar .primary-nav{display:grid;grid-template-columns:1fr;gap:4px;padding:8px 18px 16px;background:#fff;max-height:calc(100vh - 92px);overflow-y:auto;border-top:1px solid #e5e7eb;}
+  .topbar.nav-ready:not(.nav-open) .primary-nav{display:none;}
+  .topbar .primary-nav a{justify-content:flex-start;text-align:left;min-height:46px;padding:10px 14px;}
+  .topbar .primary-nav a.nav-prices{justify-content:center;margin-top:6px;}
+  .topbar.nav-open .menu-toggle span:nth-child(1){transform:translateY(7px) rotate(45deg);}
+  .topbar.nav-open .menu-toggle span:nth-child(2){opacity:0;}
+  .topbar.nav-open .menu-toggle span:nth-child(3){transform:translateY(-7px) rotate(-45deg);}
+}

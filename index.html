@@ -53,7 +53,8 @@
       ]
     }
   </script>
-  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="/styles.css?v=20261127-2">
+  <link rel="stylesheet" href="/navigation-v1.css">
   <style>
     .analytics-consent[hidden] { display: none; }
     .analytics-consent { position: fixed; z-index: 1000; bottom: 12px; left: 50%; transform: translateX(-50%); width: min(620px, calc(100% - 24px)); box-sizing: border-box; background: #fff; border: 1px solid #d1d5db; border-radius: 14px; padding: 12px 14px; box-shadow: 0 5px 24px #0002; color: #1f2937; font-size: 14px; }
@@ -78,11 +79,9 @@
 </div>
   <header class="topbar">
   <div class="container topbar-inner">
-    <a class="menu-toggle" href="#precios" data-scroll-target="precios" aria-label="Abrir menú de productos">
-      <span></span>
-      <span></span>
-      <span></span>
-    </a>
+    <button type="button" class="menu-toggle" aria-label="Abrir menú principal" aria-controls="primary-navigation" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
 
     <a class="brand brand-centered" href="#" aria-label="El Pulento Huevo - Inicio">
       <img src="logo.png" alt="El Pulento Huevo" class="logo-img" width="1024" height="1024">
@@ -94,7 +93,42 @@
       </svg>
     </a>
   </div>
+<nav id="primary-navigation" class="primary-nav" aria-label="Navegación principal">
+  <a href="/" aria-current="page">Inicio</a>
+  <a href="/huevos-a-domicilio/">Huevos a domicilio</a>
+  <a href="/huevos-por-mayor/">Huevos por mayor</a>
+  <a href="/zonas-de-despacho/">Zonas de despacho</a>
+  <a href="/preguntas-frecuentes/">Preguntas frecuentes</a>
+  <a class="nav-prices" href="/#precios">Precios y ofertas</a>
+</nav>
 </header>
+<script>
+(() => {
+  const header = document.querySelector('.topbar');
+  const toggle = header.querySelector('.menu-toggle');
+  const menu = header.querySelector('#primary-navigation');
+  const mobile = window.matchMedia('(max-width:767px)');
+  function setOpen(open) {
+    header.classList.toggle('nav-open', open);
+    toggle.setAttribute('aria-expanded', String(open));
+    toggle.setAttribute('aria-label', open ? 'Cerrar menú principal' : 'Abrir menú principal');
+  }
+  toggle.addEventListener('click', () => setOpen(!header.classList.contains('nav-open')));
+  menu.addEventListener('click', e => { if (e.target.closest('a')) setOpen(false); });
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape' && header.classList.contains('nav-open')) {
+      setOpen(false);
+      toggle.focus();
+    }
+  });
+  document.addEventListener('click', e => {
+    if (!header.contains(e.target) && header.classList.contains('nav-open')) setOpen(false);
+  });
+  if (mobile.addEventListener) mobile.addEventListener('change', () => setOpen(false));
+  header.classList.add('nav-ready');
+  setOpen(false);
+})();
+</script>
 
   <main class="container">
     <section class="hero hero-compact">
@@ -154,9 +188,7 @@
       </div>
     </section>
 
-    <section class="seo-home-nav" aria-label="Más información y formatos de compra">
-      <nav class="seo-nav" aria-label="Secciones de El Pulento Huevo"><a href="/" aria-current="page">Inicio</a><a href="/huevos-a-domicilio/">Huevos a domicilio</a><a href="/huevos-por-mayor/">Huevos por mayor</a><a href="/zonas-de-despacho/">Zonas de despacho</a><a href="/preguntas-frecuentes/">Preguntas frecuentes</a></nav>
-    </section>
+    
 
     <section id="precios" class="grid">
       <div id="huevos" class="products-section-title">
