@@ -1,0 +1,15 @@
+/* Ficha de respaldo profesional del blog */
+.blog-page .blog-professional{display:flex;align-items:flex-start;gap:16px;max-width:780px;margin:20px auto;padding:20px 22px;border:1px solid #e4dcd0;background:linear-gradient(145deg,#fffdf8,#fff);box-shadow:0 6px 18px rgba(17,24,39,.05);scroll-margin-top:calc(var(--anchor-offset) + 16px)}
+.blog-page > .commercial-heading + .blog-professional{max-width:none;margin:0 0 20px}
+.professional-monogram{flex:0 0 52px;width:52px;height:52px;border-radius:50%;background:#f2e5d6;color:#991b1b;display:grid;place-items:center;font-weight:850;font-size:18px}
+.professional-info{flex:1;min-width:0}
+.blog-professional h2{font-size:14px;color:#991b1b;font-weight:750;margin:0 0 5px}
+.blog-professional .professional-name{font-size:18px;color:#111827;font-weight:750;line-height:1.35;margin:0 0 7px}
+.professional-name span{font-size:14px;font-weight:550;color:#4b5563}
+.professional-description{font-size:14px;line-height:1.55;color:#374151;margin:0 0 10px}
+.professional-instagram{display:inline-flex;align-items:center;gap:8px;min-height:44px;padding:8px 13px;border-radius:10px;border:1px solid #e1b2ae;color:#991b1b;background:#fff;text-decoration:none;font-size:14px;font-weight:700;max-width:100%;overflow-wrap:anywhere}
+.professional-instagram:hover{background:#fff3f2}
+.professional-arrow{font-size:16px}
+.professional-note{font-size:12px;line-height:1.5;color:#4b5563;margin:9px 0 0}
+.professional-byline{color:#991b1b;text-decoration:underline;text-underline-offset:2px}
+@media(max-width:480px){.blog-page .blog-professional{padding:15px;gap:11px}.professional-monogram{width:40px;height:40px;flex-basis:40px;font-size:14px}.professional-name span{display:block}.blog-professional .professional-name{font-size:17px}}
