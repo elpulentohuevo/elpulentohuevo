@@ -1,0 +1,141 @@
+name: Monitoreo web El Pulento Huevo
+on:
+  schedule:
+    - cron: '17 */3 * * *'
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/monitoreo-web.yml'
+permissions:
+  contents: read
+jobs:
+  comprobar:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - name: Revisar sitio publicado
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          import json
+          import re
+          import ssl
+          import time
+          import urllib.request
+          import urllib.parse
+          import xml.etree.ElementTree as ET
+          from html.parser import HTMLParser
+          
+          BASE = "https://www.elpulentohuevo.cl/"
+          PHONE = "56958868848"
+          GA = "G-S3J4Z0D8Z0"
+          EXPECTED = set("portada oferta_90_extra bandeja_30_primera bandeja_30_extra delivery caja_120_primera caja_120_extra caja_180_primera caja_180_extra queso_250g queso_500g queso_1kg cotizacion_negocios pie_pagina".split())
+          
+          class Page(HTMLParser):
+              def __init__(self):
+                  super().__init__()
+                  self.links = []
+                  self.canonicals = []
+                  self.descriptions = []
+                  self.noindex = False
+                  self.h1 = 0
+                  self.titles = []
+                  self.in_title = False
+              def handle_starttag(self, tag, attrs):
+                  a = dict(attrs)
+                  if tag == "a":
+                      self.links.append(a)
+                  if tag == "link" and "canonical" in (a.get("rel") or "").lower().split():
+                      self.canonicals.append(a.get("href"))
+                  if tag == "meta":
+                      name = (a.get("name") or "").lower()
+                      content = a.get("content") or ""
+                      if name == "description":
+                          self.descriptions.append(content)
+                      if name in ("robots", "googlebot") and re.search(r"\b(noindex|none)\b", content, re.I):
+                          self.noindex = True
+                  if tag == "h1":
+                      self.h1 += 1
+                  if tag == "title":
+                      self.in_title = True
+                      self.titles.append("")
+              def handle_endtag(self, tag):
+                  if tag == "title":
+                      self.in_title = False
+              def handle_data(self, data):
+                  if self.in_title:
+                      self.titles[-1] += data
+          
+          def fetch(path):
+              url = urllib.parse.urljoin(BASE, path)
+              req = urllib.request.Request(url, headers={"User-Agent": "ElPulentoHuevo-Monitor/1.0", "Cache-Control": "no-cache"})
+              with urllib.request.urlopen(req, timeout=20, context=ssl.create_default_context()) as res:
+                  if res.status != 200 or not res.geturl().startswith(BASE):
+                      raise ValueError("Respuesta o redireccion inesperada: " + path)
+                  body = res.read(2000000)
+                  headers = res.headers
+              return body.decode("utf-8"), headers
+          
+          def check():
+              problems = []
+              def verify(ok, msg):
+                  if not ok:
+                      problems.append(msg)
+          
+              try:
+                  html, headers = fetch("")
+                  page = Page()
+                  page.feed(html)
+                  verify(len(page.titles) == 1 and bool(page.titles[0].strip()), "Titulo SEO ausente o duplicado")
+                  verify(len(page.descriptions) == 1 and bool(page.descriptions[0].strip()), "Metadescripcion ausente o duplicada")
+                  verify(page.h1 == 1, "Debe existir un H1")
+                  verify(page.canonicals == [BASE], "URL canonica ausente o incorrecta")
+                  verify(not page.noindex and not re.search(r"\b(noindex|none)\b", headers.get("X-Robots-Tag", ""), re.I), "Pagina marcada como no indexable")
+                  ids = []
+                  for a in page.links:
+                      href = a.get("href") or ""
+                      button = a.get("data-whatsapp-button")
+                      url = urllib.parse.urlsplit(href)
+                      wa = (url.hostname or "").lower() in ("wa.me", "api.whatsapp.com", "web.whatsapp.com", "whatsapp.com") or url.scheme == "whatsapp"
+                      if not (button or wa):
+                          continue
+                      ids.append(button)
+                      verify(url.scheme == "https" and url.netloc == "wa.me" and url.path == "/" + PHONE and not url.fragment, "Enlace WhatsApp incorrecto: " + str(button))
+                      if button != "pie_pagina":
+                          verify(bool(urllib.parse.parse_qs(url.query).get("text", [""])[0].strip()), "Mensaje de pedido ausente: " + str(button))
+                  verify(len(ids) == len(EXPECTED) and set(ids) == EXPECTED, "Faltan, sobran o se repiten identificadores de WhatsApp")
+                  verify(all(s in html for s in (GA, "googletagmanager.com/gtag/js", "whatsapp_click", "button_id", "analytics-consent")), "Codigo de Analytics o consentimiento incompleto")
+                  for asset in ("styles.css",):
+                      fetch(asset)
+              except Exception as exc:
+                  problems.append("Error al revisar la web o sus recursos: " + str(exc))
+          
+              try:
+                  sitemap, _ = fetch("sitemap.xml")
+                  root = ET.fromstring(sitemap)
+                  ns = {"s": "http://www.sitemaps.org/schemas/sitemap/0.9"}
+                  verify(root.tag == "{http://www.sitemaps.org/schemas/sitemap/0.9}urlset" and BASE in [e.text for e in root.findall("s:url/s:loc", ns)], "Sitemap invalido o portada ausente")
+              except Exception as exc:
+                  problems.append("Sitemap inaccesible o invalido: " + str(exc))
+              try:
+                  robots, _ = fetch("robots.txt")
+                  verify(any(line.strip().lower() == ("Sitemap: " + BASE + "sitemap.xml").lower() for line in robots.splitlines()), "robots.txt no referencia el sitemap")
+                  verify(not re.search(r"^\s*Disallow\s*:\s*/\s*(?:#.*)?$", robots, re.I | re.M), "robots.txt bloquea todo el sitio")
+              except Exception as exc:
+                  problems.append("robots.txt inaccesible: " + str(exc))
+              return problems
+          
+          for attempt in range(2):
+              errors = check()
+              if not errors:
+                  print("OK: web, HTTPS, 14 botones WhatsApp, SEO, Analytics, CSS, sitemap y robots.txt.")
+                  break
+              print("Intento", attempt + 1, ":", json.dumps(errors, ensure_ascii=False), flush=True)
+              if attempt == 0:
+                  time.sleep(30)
+          else:
+              for error in errors:
+                  print("::error::" + error.replace("\n", " "))
+              raise SystemExit(1)
+          PY
