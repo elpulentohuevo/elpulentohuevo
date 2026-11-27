@@ -1,0 +1,29 @@
+/* Información comercial primero; contenido explicativo visible debajo */
+.seo-page .commercial-heading{padding:6px 0 12px;text-align:left;}
+.seo-page .commercial-heading h1{font-size:clamp(25px,4vw,36px);line-height:1.15;letter-spacing:-.65px;margin:0 0 8px;}
+.seo-page .commercial-heading p{font-size:15px;line-height:1.5;color:#4b5563;margin:0;}
+.seo-page .commercial-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;}
+.seo-page .commercial-product{display:flex;flex-direction:column;align-items:stretch;gap:8px;min-width:0;padding:18px;}
+.seo-page .product-eyebrow{font-size:14px;font-weight:650;color:#4b5563;}
+.seo-page .commercial-product h2{font-size:19px;line-height:1.25;margin:0;color:#111827;}
+.seo-page .commercial-product h2 span{font-weight:500;color:#4b5563;font-size:13px;}
+.seo-page .commercial-price{font-size:clamp(23px,4vw,31px);letter-spacing:-.6px;line-height:1.15;font-weight:850;color:#111827;margin:4px 0 6px;}
+.seo-page .commercial-product .btn{margin-top:auto;min-height:44px;text-align:center;font-size:14px;}
+.seo-page .commercial-note{font-size:14px;color:#4b5563;line-height:1.5;margin:12px 0 24px;}
+.seo-page .commercial-note a{color:#14532d;}
+.seo-page .commercial-heading + .seo-block{margin-top:0;}
+.seo-page .commercial-help{background:#fff;border:1px solid #e5e7eb;}
+.seo-page .commercial-help h2{margin-top:0;}
+.seo-page .commercial-cta{display:flex;flex-wrap:wrap;gap:10px;align-items:center;}
+.seo-page .commercial-cta .btn,.seo-page .commercial-cta .commercial-secondary{min-height:44px;text-align:center;}
+.seo-page .commercial-cta .commercial-secondary{display:inline-flex;align-items:center;justify-content:center;border:1px solid #e1b2ae;color:#b91c1c;border-radius:12px;padding:10px 16px;text-decoration:none;font-size:14px;font-weight:700;background:#fff;}
+.seo-page .delivery-inline{display:inline-flex;align-items:center;gap:16px;background:#fff;border:1px solid #e5e7eb;padding:10px 16px;border-radius:12px;}
+.seo-page .delivery-inline span{font-size:14px;color:#374151;}
+.seo-page .delivery-inline strong{font-size:25px;color:#111827;}
+.seo-page .seo-faq{padding:0;border:1px solid #e5e7eb;border-radius:12px;margin:8px 0;background:#fff;}
+.seo-page .seo-faq summary{display:flex;justify-content:space-between;gap:12px;align-items:center;list-style:none;padding:13px 15px;min-height:48px;}
+.seo-page .seo-faq summary::-webkit-details-marker{display:none;}
+.seo-page .seo-faq summary::after{content:"+";color:#b91c1c;font-size:22px;line-height:1;flex-shrink:0;}
+.seo-page .seo-faq[open] summary::after{content:"−";}
+.seo-page .seo-faq p{padding:0 15px 15px;margin:0;line-height:1.6;}
+@media(max-width:700px){.seo-page .commercial-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:9px;}.seo-page .commercial-product{padding:12px;}.seo-page .commercial-product h2{font-size:16px;}.seo-page .product-eyebrow{font-size:12px;}.seo-page .commercial-product .btn{padding:9px 5px;font-size:12px;}.seo-page .commercial-heading{padding-top:0;}.seo-page .commercial-cta>*{flex:1 1 100%;}.seo-page .commercial-heading .delivery-inline{gap:10px;}.seo-page .seo-block{padding:14px;}}
