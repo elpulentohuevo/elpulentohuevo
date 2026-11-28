@@ -1,0 +1,42 @@
+name: Optimizar logo del sitio
+on:
+  push:
+    branches: [main]
+    paths: ['.github/workflows/optimizar-logo.yml']
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  convertir:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+      - name: Generar archivos optimizados
+        run: |
+          python3 -m pip install --quiet Pillow
+          python3 - <<'PY'
+          from PIL import Image
+          from pathlib import Path
+          original = Image.open('logo.png')
+          assert original.size == (1024, 1024), original.size
+          resized = original.resize((256, 256), Image.Resampling.LANCZOS)
+          resized.save('logo-256.webp', 'WEBP', quality=90, method=6)
+          resized.save('logo-256.png', 'PNG', optimize=True)
+          for name in ('logo-256.webp', 'logo-256.png'):
+              with Image.open(name) as check:
+                  assert check.size == (256, 256)
+                  check.verify()
+              print(name, Path(name).stat().st_size)
+          assert Path('logo-256.webp').stat().st_size < 30000
+          PY
+      - name: Guardar solo los recursos optimizados
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add -- logo-256.webp logo-256.png
+          if git diff --cached --quiet; then exit 0; fi
+          git commit -m "Genera logo WebP y PNG de 256 px"
+          git push origin HEAD:main
